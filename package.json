@@ -1,0 +1,75 @@
+{
+  "name": "llmhub-plugin-break-reminder",
+  "version": "1.0.0",
+  "description": "Set a daily limit for the keys you code with. Past it, the model tells you to take a break instead of answering.",
+  "type": "module",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "node --test"
+  },
+  "files": [
+    "index.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "llmhub-plugin",
+    "llmhub",
+    "break-reminder"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huangdihd/llmhub-plugin-break-reminder.git"
+  },
+  "homepage": "https://github.com/huangdihd/llmhub-plugin-break-reminder",
+  "engines": {
+    "llmhub": "^1.5.0"
+  },
+  "llmhub": {
+    "name": "Break Reminder",
+    "configSchema": [
+      {
+        "key": "dailyTokens",
+        "label": "Tokens per day (0 for no limit)",
+        "type": "number",
+        "default": 0
+      },
+      {
+        "key": "dailyRequests",
+        "label": "Requests per day (0 for no limit)",
+        "type": "number",
+        "default": 0
+      },
+      {
+        "key": "resetHour",
+        "label": "Hour the day starts (0-23, server time)",
+        "type": "number",
+        "default": 4
+      },
+      {
+        "key": "messages",
+        "label": "Reminders, one per line. {tokens}, {requests} and {reset} are filled in",
+        "type": "text",
+        "multiline": true,
+        "default": "今天已经写了 {requests} 轮、{tokens} 个 token 了。合上电脑吧,代码明天还在。\n到点了。站起来走走,喝口水,{reset} 之后再来。\n你今天的额度用完了。不是模型累了,是你该休息了。\n今天就到这儿。去睡觉,bug 在梦里不会变多。\n已达到今天的上限({tokens} token)。{reset} 重置,在那之前请离开键盘。"
+      }
+    ],
+    "contributes": {
+      "apiKeys": [
+        {
+          "key": "counted",
+          "label": "Counts toward the daily coding limit",
+          "type": "boolean",
+          "default": false
+        }
+      ],
+      "metrics": [
+        {
+          "key": "today",
+          "label": "Coding limit"
+        }
+      ]
+    }
+  }
+}
